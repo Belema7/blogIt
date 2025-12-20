@@ -31,7 +31,7 @@ const Footer = () => {
           <h2 className="text-xl font-semibold tracking-tight mb-4">
             BlogIt
           </h2>
-          <p className="text-sm text-white/70 leading-relaxed hover:text-white">
+          <p className="text-sm text-white/70 leading-relaxed hover:text-white transition-colors">
             BlogIt is a personal space where I document my journey,
             share what I learn, and reflect on building projects
             step by step.
@@ -44,15 +44,15 @@ const Footer = () => {
             Contact
           </h3>
           <ul className="space-y-3 text-sm text-white/70">
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
               <Mail size={16} />
               belemagirma31@gmail.com
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
               <Phone size={16} />
               +251 933 391 417
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
               <MapPin size={16} />
               Addis Ababa, Ethiopia
             </li>
