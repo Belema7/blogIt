@@ -31,7 +31,7 @@ const Footer = () => {
           <h2 className="text-xl font-semibold tracking-tight mb-4">
             BlogIt
           </h2>
-          <p className="text-sm text-white/70 leading-relaxed">
+          <p className="text-sm text-white/70 leading-relaxed hover:text-white">
             BlogIt is a personal space where I document my journey,
             share what I learn, and reflect on building projects
             step by step.
