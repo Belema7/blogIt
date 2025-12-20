@@ -1,8 +1,11 @@
 import React from 'react'
+import Routing from './routing/Routing'
 
 const App = () => {
   return (
-    <div className='text-6xl text-center'>App</div>
+    <div>
+      <Routing/>
+    </div>
   )
 }
 
