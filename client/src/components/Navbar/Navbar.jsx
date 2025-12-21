@@ -27,9 +27,8 @@ const Navbar = () => {
 
   return (
     <header 
-    className="w-full border-b bg-white relative z-50"
-          s
-    >
+    className="w-full border-b bg-white fixed top-0 left-0 z-50">
+          
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
         {/* Logo */}
