@@ -1,5 +1,7 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+// import ProtectedRoute from './ProtectedRoute'
+import ProtectedRoute from '../routes/ProtectedRoute'
+
 import Landing from '../pages/Landing/Landing'
 import Register from '../pages/Auth/Register'
 import Login from '../pages/Auth/Login'
@@ -18,35 +20,30 @@ import MyJourney from '../pages/Journey/MyJourney'
 
 const Routing = () => {
   return (
-      <Routes>
-        <Route path='/' element={<Landing/>}/>
+    <Routes>
+      {/* Public */}
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Register />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:id" element={<PostDetails />} />
+      <Route path="/journey" element={<Journey />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
 
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/signup' element={<Register/>} />
+      {/* Protected */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/blog/new" element={<CreateBlog />} />
+        <Route path="/blog/edit/:id" element={<EditBlogs />} />
+        <Route path="/blog/my/:id" element={<MyBlogs />} />
 
+        <Route path="/journey/new" element={<CreateJourney />} />
+        <Route path="/journey/edit/:id" element={<EditJourney />} />
+        <Route path="/journey/my/:id" element={<MyJourney />} />
 
-        {/* Blogs route */}
-        <Route path='/writeblog' element={<CreateBlog/>}/>
-        <Route path='/Post/post/:id' element={<PostDetails/>}/>
-        <Route path='/editblog/:id' element={<EditBlogs/>}/>
-        <Route path='/myblogs/:id' element={<MyBlogs/>}/>
-
-        {/* Journey route */}
-        <Route path='/writejourney' element={<CreateJourney/>}/>
-        <Route path='/editjouney/:id' element={<EditJourney/>}/>
-        <Route path='/myjourney/:id' element={<MyJourney/>}/>
-
-        
-
-
-        <Route path='/profiles/:id' element={<Profile/>}/>
-
-        <Route path='/blog' element={<Blog/>}/>
-        <Route path='/journey' element={<Journey/>}/>
-
-        <Route path='/about' element={<About/>}/>
-        <Route path='/contact' element={<Contact/>}/>
-      </Routes>
+        <Route path="/profile/:id" element={<Profile />} />
+      </Route>
+    </Routes>
   )
 }
 
