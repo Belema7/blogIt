@@ -1,43 +1,55 @@
 import React, { useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigation, useLocation } from 'react-router-dom'
 import {
   Menu,
   X,
-  ArrowRight
+  ArrowRight,
+  Search
 } from 'lucide-react'
 
 const linkBase = 'transition-colors duration-200'
 
 const desktopLink = ({ isActive }) =>
-  `${linkBase} ${
-    isActive
-      ? 'text-black border-b-2 border-black pb-1'
-      : 'text-black/60 hover:text-black'
+  `${linkBase} ${isActive
+    ? 'text-black border-b-2 border-black pb-1'
+    : 'text-black/60 hover:text-black'
   }`
 
 const mobileLink = ({ isActive }) =>
-  `${linkBase} block py-3 ${
-    isActive ? 'text-black font-medium' : 'text-black/70'
+  `${linkBase} block py-3 ${isActive ? 'text-black font-medium' : 'text-black/70'
   }`
 
 const Navbar = () => {
   const [open, setOpen] = useState(false)
+  const [prompt, setPrompt] = useState("")
+  const navigate = useNavigation();
+  const path = useLocation().pathname()
 
   const closeMenu = () => setOpen(false)
 
   return (
-    <header 
-    className="w-full border-b bg-white fixed top-0 left-0 z-50">
-          
+    <header
+      className="w-full border-b bg-white fixed top-0 left-0 z-50">
+
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
         {/* Logo */}
-        <Link to="/" >
-          <div className="text-xl font-semibold tracking-tight cursor-pointer">
+        <div className="text-xl font-semibold tracking-tight cursor-pointer">
+          <Link to="/" >
             BlogIt
-          </div>
-        </Link>
+          </Link>
+        </div>
 
+        <h1 className='hidden md:display'>
+          {
+            path="/" && 
+            <div onChange={(e) => setPrompt(e.target.value)}>
+              <input type="text" placeholder='search a post...'/>
+              <p onClick={() => navigate(prompt ? "?search"+prompt : navigate("/")) }><Search /></p>
+            </div>
+          }
+        </h1>
+          
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <NavLink to="/blog" className={desktopLink}>Blog</NavLink>
@@ -67,7 +79,7 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       {open && (
         <div className="md:hidden absolute top-0 left-0 w-full bg-white border-b shadow-lg">
-          
+
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b">
             <span className="text-lg font-semibold">Menu</span>
