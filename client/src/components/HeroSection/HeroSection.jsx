@@ -3,24 +3,25 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, BookOpen } from 'lucide-react'
 import heroBg from '../../assets/images/hero.png'
 import WhatIWrite from './WhatIWrite'
+import Footer from '../Footer/Footer'
 
 const HeroSection = () => {
   return (
     <>
       <section
-      className="relative min-h-[80vh] flex items-center text-white"
-      style={{
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-    >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/90" />
+        className="relative min-h-[80vh] flex items-center text-white"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/90" />
 
-      {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-6 py-24">
-        <div className="max-w-2xl">
+        {/* Content */}
+        <div className="relative max-w-7xl mx-auto px-6 py-24">
+          <div className="max-w-2xl">
 
 
             {/* Intro */}
@@ -66,6 +67,9 @@ const HeroSection = () => {
       </section>
 
       <WhatIWrite />
+      <div>
+        <Footer />
+      </div>
     </>
   )
 }

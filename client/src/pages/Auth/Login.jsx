@@ -1,65 +1,125 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { Mail, Lock, AlertCircle } from "lucide-react";
+import AuthLayout from "../../components/Layout/AuthLayout";
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
 
 const Login = () => {
   const { login } = useUser();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
     setError("");
+    setIsLoading(true);
 
     try {
       await login(email, password);
+      // Assuming context handles redirect or we do it here. 
+      // Usually login success -> redirect to home/dashboard
+      navigate("/");
     } catch (err) {
-      setError(err.message);
+      // Improve error message if possible
+      setError(err.response?.data?.message || err.message || "Failed to login. Please check your credentials.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-4">
-      <div className="w-full max-w-md bg-zinc-900 rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-semibold text-white text-center mb-6">
-          Login
-        </h2>
+    <AuthLayout
+      title="Welcome Back"
+      subtitle="Sign in to your account to continue"
+    >
+      <form onSubmit={handleSubmit} className="space-y-6">
 
         {error && (
-          <p className="mb-4 text-sm text-red-500 text-center">
-            {error}
-          </p>
+          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 flex items-start space-x-3">
+            <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-red-400">{error}</p>
+          </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
+        <div className="space-y-4">
+          <Input
+            id="email"
             type="email"
-            placeholder="Email"
+            label="Email Address"
+            placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-800 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-white"
+            icon={Mail}
+            disabled={isLoading}
             required
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-800 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-white"
-            required
-          />
+          <div className="space-y-2">
+            <Input
+              id="password"
+              type="password"
+              label="Password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              icon={Lock}
+              disabled={isLoading}
+              required
+            />
+            {/* Forgot Password Link - purely visual for now if no route exists, 
+                or link to a placeholder route */}
+            <div className="flex justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-xs text-zinc-400 hover:text-white transition-colors"
+              >
+                Forgot password?
+              </Link>
+            </div>
+          </div>
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-white text-black font-medium py-2 rounded-md hover:bg-zinc-200 transition"
+        <Button
+          type="submit"
+          className="w-full bg-white hover:bg-zinc-200 text-black font-semibold"
+          isLoading={isLoading}
+        >
+          Sign In
+        </Button>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-zinc-800" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-zinc-900 px-2 text-zinc-500">
+              Or
+            </span>
+          </div>
+        </div>
+
+        <div className="text-center text-sm text-zinc-400">
+          Don&apos;t have an account?{" "}
+          <Link
+            to="/signup"
+            className="font-medium text-white hover:underline underline-offset-4"
           >
-            Login
-          </button>
-        </form>
-      </div>
-    </div>
+            Sign up
+          </Link>
+        </div>
+      </form>
+    </AuthLayout>
   );
 };
 

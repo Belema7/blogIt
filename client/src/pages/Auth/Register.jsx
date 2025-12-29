@@ -1,75 +1,120 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { Mail, Lock, User, AlertCircle } from "lucide-react";
+import AuthLayout from "../../components/Layout/AuthLayout";
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
 
 const Register = () => {
   const { register } = useUser();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Basic validation
+    if (!username || !email || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+
     setError("");
+    setIsLoading(true);
 
     try {
       await register(username, email, password);
+      // Navigate to login or home after successful registration
+      navigate("/");
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || err.message || "Failed to register. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-4">
-      <div className="w-full max-w-md bg-zinc-900 rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-semibold text-white text-center mb-6">
-          Register
-        </h2>
+    <AuthLayout
+      title="Create Account"
+      subtitle="Join BlogIt and start your journey today"
+    >
+      <form onSubmit={handleSubmit} className="space-y-5">
 
         {error && (
-          <p className="mb-4 text-sm text-red-500 text-center">
-            {error}
-          </p>
+          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 flex items-start space-x-3">
+            <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-red-400">{error}</p>
+          </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
+        <div className="space-y-4">
+          <Input
+            id="username"
             type="text"
-            placeholder="Username"
+            label="Username"
+            placeholder="johndoe"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-800 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-white"
+            icon={User}
+            disabled={isLoading}
             required
           />
 
-          <input
+          <Input
+            id="email"
             type="email"
-            placeholder="Email"
+            label="Email Address"
+            placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-800 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-white"
+            icon={Mail}
+            disabled={isLoading}
             required
           />
 
-          <input
+          <Input
+            id="password"
             type="password"
-            placeholder="Password"
+            label="Password"
+            placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-800 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-white"
+            icon={Lock}
+            disabled={isLoading}
             required
           />
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-white text-black font-medium py-2 rounded-md hover:bg-zinc-200 transition"
+        <Button
+          type="submit"
+          className="w-full bg-white hover:bg-zinc-200 text-black font-semibold mt-2"
+          isLoading={isLoading}
+        >
+          Create Account
+        </Button>
+
+        <div className="text-center text-sm text-zinc-400 mt-4">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-medium text-white hover:underline underline-offset-4"
           >
-            Register
-          </button>
-        </form>
-      </div>
-    </div>
+            Sign in
+          </Link>
+        </div>
+      </form>
+    </AuthLayout>
   );
 };
 
