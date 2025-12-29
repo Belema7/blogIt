@@ -1,24 +1,21 @@
-import { Navigate, Outlet } from 'react-router-dom'
-import { useContext } from 'react'
-import { UserContext } from '../context/UserContext'
+import { Navigate, Outlet } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const ProtectedRoute = () => {
-  const { user, loading } = useContext(UserContext)
+  const { user, loading } = useUser();
 
+  // Wait until auth state is resolved
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-sm text-black/60">
-        Checking authentication...
-      </div>
-    )
+    return <div>Loading...</div>;
   }
 
+  // Not logged in → redirect to login
   if (!user) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />
-}
+  // Logged in → allow access
+  return <Outlet />;
+};
 
-export default ProtectedRoute
-
+export default ProtectedRoute;

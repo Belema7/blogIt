@@ -1,36 +1,103 @@
-import { createContext, useEffect, useState } from 'react'
-import axios from 'axios'
-import { URL } from '../url'
+import { createContext, useContext, useEffect, useState } from "react";
+import { URL } from "../url";
 
-export const UserContext = createContext(null)
+const UserContext = createContext();
 
-const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem("token");
+
+  // Load user on refresh
   useEffect(() => {
-    fetchUser()
-  }, [])
+    const fetchUser = async () => {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
 
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get(`${URL}/api/auth/refetch`, {
-        withCredentials: true,
-      })
-      setUser(res.data)
-    } catch (error) {
-      console.error(error)
-      setUser(null)
-    } finally {
-      setLoading(false)
-    }
-  }
+      try {
+        const res = await fetch(`${URL}/api/users/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-  return (
-    <UserContext.Provider value={{ user, setUser, loading }}>
-      {children}
-    </UserContext.Provider>
-  )
+        if (!res.ok) throw new Error("Unauthorized");
+
+        const data = await res.json();
+        setUser(data);
+      } catch (error) {
+        logout();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const login = async (email, password) => {
+    const res = await fetch(`${URL}/api/users/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+let data;
+try {
+  data = await res.json();
+} catch {
+  throw new Error("Server returned invalid response");
 }
 
-export default UserContextProvider
+if (!res.ok) {
+  throw new Error(data?.message || "Login failed");
+}
+
+
+    localStorage.setItem("token", data.token);
+    setUser(data);
+  };
+
+  
+
+  const register = async (username, email, password) => {
+    const res = await fetch(`${URL}/api/users/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Registration failed");
+    }
+
+    localStorage.setItem("token", data.token);
+    setUser(data);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
+  return (
+    <UserContext.Provider
+      value={{
+        user,
+        loading,
+        login,
+        register,
+        logout
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export const useUser = () => useContext(UserContext);
