@@ -1,7 +1,7 @@
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-const { protect } = require("../middleware/auth");
+import express from "express";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -19,6 +19,10 @@ router.post("/register", async (req, res) => {
   try {
     if (!username || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
 
     const userExists = await User.findOne({
@@ -78,9 +82,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Protected route
-router.get("/me", protect, (req, res) => {
-  res.status(200).json(req.user);
+// Logout (client-side token removal, but endpoint for consistency)
+router.post("/logout", (req, res) => {
+  res.status(200).json({ message: "Logged out successfully" });
 });
 
-module.exports = router;
+// Protected route - Get current user
+router.get("/me", protect, (req, res) => {
+  res.status(200).json({
+    id: req.user._id,
+    username: req.user.username,
+    email: req.user.email
+  });
+});
+
+export default router;

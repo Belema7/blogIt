@@ -7,11 +7,11 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-
   // Load user on refresh
   useEffect(() => {
     const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      
       if (!token) {
         setLoading(false);
         return;
@@ -29,7 +29,8 @@ export const UserProvider = ({ children }) => {
         const data = await res.json();
         setUser(data);
       } catch (error) {
-        logout();
+        localStorage.removeItem("token");
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -45,23 +46,24 @@ export const UserProvider = ({ children }) => {
       body: JSON.stringify({ email, password })
     });
 
-let data;
-try {
-  data = await res.json();
-} catch {
-  throw new Error("Server returned invalid response");
-}
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw new Error("Server returned invalid response");
+    }
 
-if (!res.ok) {
-  throw new Error(data?.message || "Login failed");
-}
-
+    if (!res.ok) {
+      throw new Error(data?.message || "Login failed");
+    }
 
     localStorage.setItem("token", data.token);
-    setUser(data);
+    setUser({
+      id: data.id,
+      username: data.username,
+      email: data.email
+    });
   };
-
-  
 
   const register = async (username, email, password) => {
     const res = await fetch(`${URL}/api/users/register`, {
@@ -70,19 +72,42 @@ if (!res.ok) {
       body: JSON.stringify({ username, email, password })
     });
 
-    const data = await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw new Error("Server returned invalid response");
+    }
 
     if (!res.ok) {
-      throw new Error(data.message || "Registration failed");
+      throw new Error(data?.message || "Registration failed");
     }
 
     localStorage.setItem("token", data.token);
-    setUser(data);
+    setUser({
+      id: data.id,
+      username: data.username,
+      email: data.email
+    });
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
+  const logout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        await fetch(`${URL}/api/users/logout`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
   };
 
   return (
