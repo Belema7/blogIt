@@ -17,7 +17,7 @@ const HeroSection = () => {
         }}
       >
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px]" />
 
         {/* Content */}
         <div className="relative max-w-7xl mx-auto px-6 py-24">
@@ -33,13 +33,13 @@ const HeroSection = () => {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-white">
               Learning by building,
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-chocolate-light">
                 one step at a time.
               </span>
             </h1>
 
             {/* Description */}
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-10 max-w-xl">
+            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed mb-10 max-w-xl">
               I document what I’m learning, building, and improving — from
               computer science fundamentals to real projects and lessons
               along the way.

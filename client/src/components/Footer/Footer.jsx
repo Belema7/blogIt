@@ -21,7 +21,7 @@ const Footer = () => {
       }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-black/95 backdrop-blur-md" />
 
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-6 py-16 grid gap-12 md:grid-cols-4">
@@ -31,7 +31,7 @@ const Footer = () => {
           <h2 className="text-2xl font-bold tracking-tight mb-4 text-white">
             Blog<span className="text-primary">It</span>
           </h2>
-          <p className="text-sm text-slate-400 leading-relaxed hover:text-slate-300 transition-colors">
+          <p className="text-sm text-zinc-400 leading-relaxed hover:text-zinc-300 transition-colors">
             BlogIt is a personal space where I share what I learn,
             and reflect on building projects step by step.
           </p>
@@ -42,7 +42,7 @@ const Footer = () => {
           <h3 className="text-sm font-bold uppercase tracking-wider mb-6 text-primary">
             Contact
           </h3>
-          <ul className="space-y-4 text-sm text-slate-400">
+          <ul className="space-y-4 text-sm text-zinc-400">
             <li className="flex items-center gap-3 hover:text-primary transition-colors cursor-pointer group">
               <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                 <Mail size={16} />
@@ -74,7 +74,7 @@ const Footer = () => {
               href="https://github.com/Belema7"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all duration-300"
+              className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-white transition-all duration-300"
             >
               <Github size={20} />
             </a>
@@ -82,7 +82,7 @@ const Footer = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all duration-300"
+              className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-white transition-all duration-300"
             >
               <Linkedin size={20} />
             </a>
@@ -90,7 +90,7 @@ const Footer = () => {
               href="https://t.me"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all duration-300"
+              className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-white transition-all duration-300"
             >
               <Send size={20} />
             </a>
@@ -102,7 +102,7 @@ const Footer = () => {
           <h3 className="text-sm font-bold uppercase tracking-wider mb-6 text-primary">
             Quick Links
           </h3>
-          <ul className="space-y-3 text-sm text-slate-400">
+          <ul className="space-y-3 text-sm text-zinc-400">
             <li>
               <Link to="/" className="hover:text-primary transition-colors flex items-center gap-2 group">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -132,7 +132,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative border-t border-white/5 py-8 text-center text-xs text-slate-500">
+      <div className="relative border-t border-white/5 py-8 text-center text-xs text-zinc-500">
         © {new Date().getFullYear()} BlogIt. Crafted with care. All rights reserved.
       </div>
     </footer>

@@ -14,7 +14,7 @@ const WhatIWrite = () => {
       }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
 
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-6">
@@ -29,7 +29,7 @@ const WhatIWrite = () => {
             Notes from building, learning, and growing
           </h2>
 
-          <p className="text-lg text-slate-300 leading-relaxed">
+          <p className="text-lg text-zinc-300 leading-relaxed">
             This blog is a record of real progress — things I’m learning,
             building, struggling with, and improving over time.
           </p>

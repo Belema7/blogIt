@@ -104,7 +104,7 @@ const Register = () => {
           Create Account
         </Button>
 
-        <div className="text-center text-sm text-slate-400 mt-6">
+        <div className="text-center text-sm text-zinc-400 mt-6">
           Already have an account?{" "}
           <Link
             to="/login"

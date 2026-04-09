@@ -125,7 +125,7 @@ const EditBlogs = () => {
   if (loading) {
     return (
       <Layout>
-        <div className="min-h-screen bg-slate-50 pt-24 pb-16 flex items-center justify-center">
+        <div className="min-h-screen bg-zinc-50 pt-24 pb-16 flex items-center justify-center">
           <Loader2 className="w-10 h-10 animate-spin text-primary" />
         </div>
       </Layout>
@@ -134,7 +134,7 @@ const EditBlogs = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-slate-50 pt-24 pb-16">
+      <div className="min-h-screen bg-zinc-50 pt-24 pb-16">
         <div className="max-w-3xl mx-auto px-6">
           <div className="mb-10">
             <h1 className="text-4xl font-extrabold text-zinc-900 mb-3 tracking-tight">Edit <span className="text-primary">Post</span></h1>

@@ -15,7 +15,7 @@ const WhatIWriteCard = ({ icon: Icon, title, description }) => {
       </h3>
 
       {/* Description */}
-      <p className="text-sm leading-relaxed text-slate-400">
+      <p className="text-sm leading-relaxed text-zinc-400">
         {description}
       </p>
     </div>

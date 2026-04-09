@@ -43,7 +43,7 @@ const Blog = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-slate-50 pt-24 pb-16">
+      <div className="min-h-screen bg-zinc-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-6">
           <div className="mb-14 text-center">
             <h1 className="text-4xl md:text-5xl font-extrabold text-zinc-900 mb-4 tracking-tight">

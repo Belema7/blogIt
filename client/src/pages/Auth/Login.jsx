@@ -103,13 +103,13 @@ const Login = () => {
             <span className="w-full border-t border-white/5" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-[#0f172a] px-2 text-slate-500 font-bold">
+            <span className="bg-black px-2 text-zinc-500 font-bold">
               Or
             </span>
           </div>
         </div>
 
-        <div className="text-center text-sm text-slate-400">
+        <div className="text-center text-sm text-zinc-400">
           Don&apos;t have an account?{" "}
           <Link
             to="/signup"

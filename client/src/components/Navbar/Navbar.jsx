@@ -107,7 +107,7 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       {
         open && (
-          <div className="md:hidden fixed inset-0 z-[100] bg-[#020617] h-screen w-screen flex flex-col overflow-hidden">
+          <div className="md:hidden fixed inset-0 z-[100] bg-black h-screen w-screen flex flex-col overflow-hidden">
 
             {/* Header Area */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-white/5 bg-zinc-950/50 backdrop-blur-md shrink-0">
