@@ -15,7 +15,9 @@ const desktopLink = ({ isActive }) =>
   }`
 
 const mobileLink = ({ isActive }) =>
-  `${linkBase} block py-3 ${isActive ? 'text-primary font-medium border-l-4 border-primary pl-3' : 'text-zinc-600 pl-3'
+  `${linkBase} block py-4 px-4 ${isActive
+    ? 'text-primary font-bold border-l-4 border-primary'
+    : 'text-slate-600'
   }`
 
 const Navbar = () => {
@@ -101,20 +103,20 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden fixed inset-0 z-[100] bg-white">
+        <div className="md:hidden fixed inset-0 z-[100] bg-zinc-100">
 
-          <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-100">
-            <span className="text-xl font-bold">Menu</span>
+          <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200">
+            <span className="text-xl font-bold text-zinc-900">Menu</span>
             <button
               onClick={closeMenu}
               aria-label="Close menu"
-              className="p-2 hover:bg-zinc-50 rounded-lg"
+              className="p-2 hover:bg-zinc-200/50 rounded-lg transition-colors text-zinc-600"
             >
               <X size={24} />
             </button>
           </div>
 
-          <div className="flex flex-col px-6 py-4 text-base">
+          <div className="flex flex-col gap-1 p-4 text-base">
             <NavLink to="/" className={mobileLink} onClick={closeMenu}>Home</NavLink>
             <NavLink to="/blog" className={mobileLink} onClick={closeMenu}>Blog</NavLink>
             <NavLink to="/about" className={mobileLink} onClick={closeMenu}>About</NavLink>
