@@ -112,6 +112,21 @@ const EditBlogs = () => {
     setImageUrl("");
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setError("Image size should be less than 5MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   if (!user) {
     return (
       <Layout>
@@ -162,19 +177,39 @@ const EditBlogs = () => {
               required
             />
 
-            <div className="space-y-3">
-              <label
-                htmlFor="imageUrl"
-                className="text-sm font-semibold text-zinc-700 ml-1"
-              >
-                Featured Image URL
-              </label>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="imageUrl"
+                  className="text-sm font-semibold text-zinc-700 ml-1"
+                >
+                  Featured Image
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="file"
+                    id="fileUpload"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById('fileUpload').click()}
+                    className="text-xs font-bold text-primary hover:text-primary-hover transition-colors flex items-center gap-1.5 bg-primary/5 px-3 py-1.5 rounded-lg border border-primary/20"
+                  >
+                    <ImageIcon size={14} />
+                    Upload File
+                  </button>
+                </div>
+              </div>
+
               <div className="relative group">
                 <input
                   id="imageUrl"
                   type="url"
                   className="flex h-12 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-12 py-2 text-sm text-zinc-900 shadow-sm transition-all placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50"
-                  placeholder="https://images.unsplash.com/..."
+                  placeholder="Or paste an image URL here..."
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   disabled={isLoading}

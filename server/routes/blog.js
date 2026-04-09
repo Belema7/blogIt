@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     const blogs = await Blog.find()
       .populate("author", "username")
       .sort({ createdAt: -1 });
-    
+
     res.status(200).json(blogs);
   } catch (error) {
     res.status(500).json({
@@ -26,7 +26,7 @@ router.get("/user/my", protect, async (req, res) => {
     const blogs = await Blog.find({ author: req.user._id })
       .populate("author", "username")
       .sort({ createdAt: -1 });
-    
+
     res.status(200).json(blogs);
   } catch (error) {
     res.status(500).json({
@@ -40,11 +40,11 @@ router.get("/user/my", protect, async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id).populate("author", "username");
-    
+
     if (!blog) {
       return res.status(404).json({ message: "Blog post not found" });
     }
-    
+
     res.status(200).json(blog);
   } catch (error) {
     res.status(500).json({
@@ -66,6 +66,7 @@ router.post("/", protect, async (req, res) => {
     const blog = await Blog.create({
       title,
       content,
+      image: req.body.image || null,
       author: req.user._id
     });
 
@@ -102,6 +103,7 @@ router.put("/:id", protect, async (req, res) => {
 
     blog.title = title;
     blog.content = content;
+    blog.image = req.body.image || blog.image;
     await blog.save();
 
     const populatedBlog = await Blog.findById(blog._id).populate("author", "username");

@@ -106,28 +106,48 @@ const PostDetails = () => {
                 </Link>
               </div>
 
-              <article className="border border-zinc-200 rounded-lg overflow-hidden bg-white">
-                <div className="p-8">
-                  <h1 className="text-4xl font-bold text-black mb-4 tracking-tight">
+              <article className="border border-zinc-200 rounded-2xl overflow-hidden bg-white shadow-xl shadow-zinc-100/50">
+                {/* Featured Image - Now above title */}
+                {blog.image && (
+                  <div className="w-full aspect-[21/9] overflow-hidden bg-zinc-100 border-b border-zinc-100">
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      className="w-full h-full object-cover"
+                      loading="eager"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+
+                <div className="p-8 md:p-12">
+                  <h1 className="text-4xl md:text-5xl font-extrabold text-black mb-6 tracking-tight leading-tight">
                     {blog.title}
                   </h1>
 
-                  <div className="flex items-center justify-between flex-wrap gap-4 mb-6 pb-6 border-b border-zinc-100">
-                    <div className="flex items-center gap-6 text-sm text-zinc-600">
-                      <div className="flex items-center gap-2">
-                        <User size={18} />
-                        <span className="font-medium">{blog.author?.username || "Unknown"}</span>
+                  <div className="flex items-center justify-between flex-wrap gap-4 mb-10 pb-8 border-b border-zinc-100">
+                    <div className="flex items-center gap-8 text-sm text-zinc-500">
+                      <div className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-900 font-bold border border-zinc-200 group-hover:bg-primary group-hover:text-white transition-all">
+                          {blog.author?.username?.[0].toUpperCase() || "?"}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-xs text-zinc-400 uppercase tracking-widest font-semibold">Written by</span>
+                          <span className="text-zinc-900 font-bold">{blog.author?.username || "Unknown"}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar size={18} />
-                        <span>{formatDate(blog.createdAt)}</span>
+                      <div className="flex flex-col border-l border-zinc-100 pl-8">
+                        <span className="text-xs text-zinc-400 uppercase tracking-widest font-semibold">Published on</span>
+                        <span className="text-zinc-900 font-bold">{formatDate(blog.createdAt)}</span>
                       </div>
                     </div>
 
                     {isAuthor && (
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-100">
                         <Link to={`/blog/edit/${blog._id}`}>
-                          <Button variant="secondary" size="sm">
+                          <Button variant="secondary" size="sm" className="bg-white hover:bg-zinc-100 text-zinc-900 border-zinc-200 shadow-sm">
                             <Edit size={16} className="mr-2" />
                             Edit
                           </Button>
@@ -137,6 +157,7 @@ const PostDetails = () => {
                           size="sm"
                           onClick={handleDelete}
                           isLoading={isDeleting}
+                          className="bg-red-50 text-red-600 border-red-100 hover:bg-red-600 hover:text-white"
                         >
                           <Trash2 size={16} className="mr-2" />
                           Delete
@@ -145,26 +166,10 @@ const PostDetails = () => {
                     )}
                   </div>
 
-                  {blog.image && (
-                    <div className="mb-8 -mx-8">
-                      <div className="w-full aspect-video overflow-hidden bg-zinc-100">
-                        <img
-                          src={blog.image}
-                          alt={blog.title}
-                          className="w-full h-full object-cover"
-                          loading="eager"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )}
-
                   <div className="prose prose-lg max-w-none">
-                    <div className="text-[#111] whitespace-pre-wrap leading-relaxed text-base">
+                    <div className="text-zinc-800 whitespace-pre-wrap leading-relaxed text-lg font-serif">
                       {blog.content.split('\n').map((paragraph, index) => (
-                        <p key={index} className="mb-4 last:mb-0">
+                        <p key={index} className="mb-6 last:mb-0">
                           {paragraph || '\u00A0'}
                         </p>
                       ))}
