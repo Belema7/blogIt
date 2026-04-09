@@ -1,2 +1,2 @@
-export const URL = "http://localhost:3000";
-export const If = "http://localhost:3000/images";
+export const URL = import.meta.env.VITE_SERVER_URL || "https://blogit-hdux.onrender.com";
+export const If = `${URL}/images`;
