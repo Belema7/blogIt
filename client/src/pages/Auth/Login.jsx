@@ -92,7 +92,7 @@ const Login = () => {
 
         <Button
           type="submit"
-          className="w-full bg-white hover:bg-zinc-200 text-black font-semibold"
+          className="w-full"
           isLoading={isLoading}
         >
           Sign In
@@ -100,20 +100,20 @@ const Login = () => {
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-zinc-800" />
+            <span className="w-full border-t border-white/5" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-zinc-900 px-2 text-zinc-500">
+            <span className="bg-[#0f172a] px-2 text-slate-500 font-bold">
               Or
             </span>
           </div>
         </div>
 
-        <div className="text-center text-sm text-zinc-400">
+        <div className="text-center text-sm text-slate-400">
           Don&apos;t have an account?{" "}
           <Link
             to="/signup"
-            className="font-medium text-white hover:underline underline-offset-4"
+            className="font-bold text-primary hover:text-primary-hover transition-colors"
           >
             Sign up
           </Link>

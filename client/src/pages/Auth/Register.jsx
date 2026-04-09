@@ -47,14 +47,14 @@ const Register = () => {
   return (
     <AuthLayout
       title="Create Account"
-      subtitle="Join BlogIt and start your journey today"
+      subtitle="Join BlogIt and start sharing your stories today"
     >
       <form onSubmit={handleSubmit} className="space-y-5">
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 flex items-start space-x-3">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-start space-x-3">
             <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-            <p className="text-sm text-red-400">{error}</p>
+            <p className="text-sm text-red-400 font-medium">{error}</p>
           </div>
         )}
 
@@ -98,17 +98,17 @@ const Register = () => {
 
         <Button
           type="submit"
-          className="w-full bg-white hover:bg-zinc-200 text-black font-semibold mt-2"
+          className="w-full mt-4"
           isLoading={isLoading}
         >
           Create Account
         </Button>
 
-        <div className="text-center text-sm text-zinc-400 mt-4">
+        <div className="text-center text-sm text-slate-400 mt-6">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-medium text-white hover:underline underline-offset-4"
+            className="font-bold text-primary hover:text-primary-hover transition-colors"
           >
             Sign in
           </Link>

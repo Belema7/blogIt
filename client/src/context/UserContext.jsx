@@ -16,7 +16,6 @@ export const UserProvider = ({ children }) => {
         setLoading(false);
         return;
       }
-
       try {
         const res = await fetch(`${URL}/api/users/me`, {
           headers: {

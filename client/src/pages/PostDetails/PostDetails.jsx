@@ -106,13 +106,13 @@ const PostDetails = () => {
                 </Link>
               </div>
 
-              <article className="border border-zinc-200 rounded-lg p-8">
-                <div className="mb-6">
-                  <h1 className="text-4xl font-bold text-black mb-4">
+              <article className="border border-zinc-200 rounded-lg overflow-hidden bg-white">
+                <div className="p-8">
+                  <h1 className="text-4xl font-bold text-black mb-4 tracking-tight">
                     {blog.title}
                   </h1>
 
-                  <div className="flex items-center justify-between flex-wrap gap-4">
+                  <div className="flex items-center justify-between flex-wrap gap-4 mb-6 pb-6 border-b border-zinc-100">
                     <div className="flex items-center gap-6 text-sm text-zinc-600">
                       <div className="flex items-center gap-2">
                         <User size={18} />
@@ -144,11 +144,31 @@ const PostDetails = () => {
                       </div>
                     )}
                   </div>
-                </div>
 
-                <div className="prose prose-lg max-w-none">
-                  <div className="text-zinc-700 whitespace-pre-wrap leading-relaxed">
-                    {blog.content}
+                  {blog.image && (
+                    <div className="mb-8 -mx-8">
+                      <div className="w-full aspect-video overflow-hidden bg-zinc-100">
+                        <img
+                          src={blog.image}
+                          alt={blog.title}
+                          className="w-full h-full object-cover"
+                          loading="eager"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="prose prose-lg max-w-none">
+                    <div className="text-[#111] whitespace-pre-wrap leading-relaxed text-base">
+                      {blog.content.split('\n').map((paragraph, index) => (
+                        <p key={index} className="mb-4 last:mb-0">
+                          {paragraph || '\u00A0'}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </article>

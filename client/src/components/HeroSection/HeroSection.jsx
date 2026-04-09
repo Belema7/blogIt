@@ -17,7 +17,7 @@ const HeroSection = () => {
         }}
       >
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/90" />
+        <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px]" />
 
         {/* Content */}
         <div className="relative max-w-7xl mx-auto px-6 py-24">
@@ -25,19 +25,21 @@ const HeroSection = () => {
 
 
             {/* Intro */}
-            <p className="text-xs sm:text-sm font-medium text-white/70 mb-3">
-              A personal blog & journey
+            <p className="text-xs sm:text-sm font-semibold text-primary uppercase tracking-widest mb-3">
+              A personal blog
             </p>
 
             {/* Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight mb-5">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-white">
               Learning by building,
               <br />
-              one step at a time.
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-300">
+                one step at a time.
+              </span>
             </h1>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-white/70 leading-relaxed mb-8">
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-10 max-w-xl">
               I document what I’m learning, building, and improving — from
               computer science fundamentals to real projects and lessons
               along the way.
@@ -47,18 +49,10 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/blog"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-4 sm:py-3 text-sm font-medium text-black hover:bg-white/90 transition"
+                className="btn-primary py-4 px-8 text-base shadow-lg shadow-primary/20 hover:scale-105"
               >
                 Read the Blog
-                <BookOpen size={18} />
-              </Link>
-
-              <Link
-                to="/journey"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-4 sm:py-3 text-sm font-medium text-white hover:bg-white/10 transition"
-              >
-                Follow the Journey
-                <ArrowRight size={18} />
+                <BookOpen size={20} />
               </Link>
             </div>
 

@@ -30,7 +30,7 @@ const Input = forwardRef(({
 
             <div className="relative">
                 {Icon && (
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
                         <Icon size={18} />
                     </div>
                 )}
@@ -40,13 +40,13 @@ const Input = forwardRef(({
                     type={type}
                     id={id}
                     className={`
-            flex h-11 w-full rounded-xl border bg-zinc-900 px-3 py-2 text-sm text-white shadow-sm transition-colors 
+            flex h-12 w-full rounded-xl border bg-white/5 px-4 py-2 text-sm text-white shadow-sm transition-all duration-200
             file:border-0 file:bg-transparent file:text-sm file:font-medium 
-            placeholder:text-zinc-500 
-            focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white
+            placeholder:text-slate-500 
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-primary
             disabled:cursor-not-allowed disabled:opacity-50
-            ${Icon ? 'pl-10' : ''}
-            ${error ? 'border-red-500 focus-visible:ring-red-500' : 'border-zinc-800'}
+            ${Icon ? 'pl-11' : ''}
+            ${error ? 'border-red-500 focus-visible:ring-red-500/50' : 'border-white/10'}
             ${className}
           `}
                     {...props}

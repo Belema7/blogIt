@@ -3,18 +3,19 @@ import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X, ArrowRight, LogOut, User } from 'lucide-react'
 import { useUser } from '../../context/UserContext'
 
-const linkBase = 'transition-colors duration-200'
+const linkBase = 'transition-all duration-200 relative px-1 py-1'
 
 const desktopLink = ({ isActive }) =>
-  `${linkBase} ${
-    isActive
-      ? 'text-black border-b-2 border-black pb-1'
-      : 'text-black/60 hover:text-black'
+  `${linkBase} ${isActive
+    ? 'text-primary'
+    : 'text-zinc-500 hover:text-primary'
+  } ${isActive
+    ? 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary'
+    : 'after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-200 hover:after:w-full'
   }`
 
 const mobileLink = ({ isActive }) =>
-  `${linkBase} block py-3 ${
-    isActive ? 'text-black font-medium' : 'text-black/70'
+  `${linkBase} block py-3 ${isActive ? 'text-primary font-medium border-l-4 border-primary pl-3' : 'text-zinc-600 pl-3'
   }`
 
 const Navbar = () => {
@@ -32,12 +33,12 @@ const Navbar = () => {
   }
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-white border-b z-50">
+    <header className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md border-b border-zinc-100 z-50">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
         {/* Logo */}
-        <Link to="/" className="text-xl font-semibold tracking-tight">
-          BlogIt
+        <Link to="/" className="text-2xl font-bold tracking-tight text-zinc-900 group">
+          Blog<span className="text-primary group-hover:text-primary-hover transition-colors">It</span>
         </Link>
 
         {/* Desktop Links */}
@@ -50,43 +51,48 @@ const Navbar = () => {
             <div className="ml-4 flex items-center gap-4">
               <Link
                 to="/blog/my"
-                className="text-black/60 hover:text-black transition-colors"
+                className="text-zinc-500 hover:text-primary transition-colors"
               >
                 My Blogs
               </Link>
               <Link
                 to="/blog/new"
-                className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2 text-white hover:bg-black/90"
+                className="btn-primary"
               >
                 New Post
               </Link>
-              <div className="flex items-center gap-2 text-black/60">
-                <User size={16} />
-                <span className="text-sm">{user.username}</span>
+              <div className="flex items-center gap-2 text-zinc-400 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100">
+                <User size={14} className="text-primary" />
+                <span className="text-xs font-semibold text-zinc-600">{user.username}</span>
               </div>
               <button
                 onClick={handleLogout}
-                className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black hover:bg-black/5 transition-colors"
+                className="btn-outline text-zinc-600 border-zinc-200 py-2"
               >
                 <LogOut size={16} />
                 Logout
               </button>
             </div>
           ) : (
-            <NavLink
-              to="/signup"
-              className="ml-4 inline-flex items-center gap-2 rounded-full bg-black px-4 py-2 text-white hover:bg-black/90"
-            >
-              Get Started
-              <ArrowRight size={16} />
-            </NavLink>
+            <div className="flex items-center gap-3">
+              <Link to="/login" className="text-zinc-600 hover:text-zinc-900 px-4 py-2">
+                Log in
+              </Link>
+              <NavLink
+                to="/signup"
+                className="btn-primary"
+              >
+                Get Started
+                <ArrowRight size={16} />
+              </NavLink>
+            </div>
           )}
         </div>
 
         {/* Mobile Hamburger */}
         <button
           onClick={() => setOpen(true)}
-          className="md:hidden text-black"
+          className="md:hidden text-zinc-900 p-2 hover:bg-zinc-50 rounded-lg"
           aria-label="Open menu"
         >
           <Menu size={24} />
@@ -95,48 +101,60 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden absolute top-0 left-0 w-full bg-white border-b shadow-lg">
+        <div className="md:hidden fixed inset-0 z-[100] bg-white">
 
-          <div className="flex items-center justify-between px-6 py-4 border-b">
-            <span className="text-lg font-semibold">Menu</span>
-            <button onClick={closeMenu} aria-label="Close menu">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-100">
+            <span className="text-xl font-bold">Menu</span>
+            <button
+              onClick={closeMenu}
+              aria-label="Close menu"
+              className="p-2 hover:bg-zinc-50 rounded-lg"
+            >
               <X size={24} />
             </button>
           </div>
 
-          <div className="flex flex-col px-6 text-sm">
+          <div className="flex flex-col px-6 py-4 text-base">
             <NavLink to="/" className={mobileLink} onClick={closeMenu}>Home</NavLink>
             <NavLink to="/blog" className={mobileLink} onClick={closeMenu}>Blog</NavLink>
             <NavLink to="/about" className={mobileLink} onClick={closeMenu}>About</NavLink>
             <NavLink to="/contact" className={mobileLink} onClick={closeMenu}>Contact</NavLink>
 
             {user ? (
-              <>
-                <NavLink to="/blog/my" className={mobileLink} onClick={closeMenu}>My Blogs</NavLink>
-                <NavLink to="/blog/new" className={mobileLink} onClick={closeMenu}>New Post</NavLink>
-                <div className="py-3 border-t border-zinc-200 mt-2">
-                  <div className="flex items-center gap-2 text-black/70 mb-3">
-                    <User size={18} />
-                    <span>{user.username}</span>
+              <div className="mt-4 pt-4 border-t border-zinc-100">
+                <div className="flex items-center gap-3 px-3 py-2 bg-zinc-50 rounded-lg mb-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <User size={20} />
                   </div>
+                  <div>
+                    <p className="text-sm font-bold text-zinc-900">{user.username}</p>
+                    <p className="text-xs text-zinc-500">Creator</p>
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Link to="/blog/my" className="btn-outline justify-start w-full" onClick={closeMenu}>My Blogs</Link>
+                  <Link to="/blog/new" className="btn-primary justify-start w-full" onClick={closeMenu}>New Post</Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-4 py-3 text-black hover:bg-black/5"
+                    className="btn-outline justify-start w-full text-red-500 border-red-50 border-red-100 hover:bg-red-50"
                   >
                     <LogOut size={18} />
                     Logout
                   </button>
                 </div>
-              </>
+              </div>
             ) : (
-              <NavLink
-                to="/signup"
-                onClick={closeMenu}
-                className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-black px-4 py-3 text-white"
-              >
-                Get Started
-                <ArrowRight size={16} />
-              </NavLink>
+              <div className="mt-6 flex flex-col gap-3">
+                <Link to="/login" className="btn-outline w-full" onClick={closeMenu}>Log in</Link>
+                <NavLink
+                  to="/signup"
+                  onClick={closeMenu}
+                  className="btn-primary w-full"
+                >
+                  Get Started
+                  <ArrowRight size={16} />
+                </NavLink>
+              </div>
             )}
           </div>
         </div>

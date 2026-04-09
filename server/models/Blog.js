@@ -11,6 +11,10 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    image: {
+      type: String,
+      default: null
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

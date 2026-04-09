@@ -93,7 +93,7 @@ const MyBlogs = () => {
         <div className="max-w-4xl mx-auto px-6">
           <div className="mb-8 flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-black mb-2">My Blog Posts</h1>
+              <h1 className="text-4xl font-bold text-black mb-2 tracking-tight">My Blog Posts</h1>
               <p className="text-zinc-600">Manage your blog posts</p>
             </div>
             <Link to="/blog/new">
@@ -134,44 +134,60 @@ const MyBlogs = () => {
               {blogs.map((blog) => (
                 <article
                   key={blog._id}
-                  className="border border-zinc-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                  className="border border-zinc-200 rounded-lg overflow-hidden hover:shadow-md transition-all duration-200 bg-white"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <Link to={`/blog/${blog._id}`}>
-                        <h2 className="text-2xl font-semibold text-black mb-3 hover:text-zinc-700 transition-colors">
-                          {blog.title}
-                        </h2>
-                      </Link>
+                  {blog.image && (
+                    <div className="w-full aspect-video overflow-hidden bg-zinc-100">
+                      <img
+                        src={blog.image}
+                        alt={blog.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+                  
+                  <div className="p-6">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <Link to={`/blog/${blog._id}`}>
+                          <h2 className="text-2xl font-bold text-black mb-3 hover:text-zinc-700 transition-colors tracking-tight">
+                            {blog.title}
+                          </h2>
+                        </Link>
 
-                      <p className="text-zinc-600 mb-4 line-clamp-2">
-                        {blog.content.length > 150
-                          ? `${blog.content.substring(0, 150)}...`
-                          : blog.content}
-                      </p>
+                        <p className="text-[#111] mb-4 line-clamp-2 leading-relaxed">
+                          {blog.content.length > 150
+                            ? `${blog.content.substring(0, 150)}...`
+                            : blog.content}
+                        </p>
 
-                      <div className="flex items-center gap-4 text-sm text-zinc-500">
-                        <div className="flex items-center gap-1">
-                          <Calendar size={16} />
-                          <span>{formatDate(blog.createdAt)}</span>
+                        <div className="flex items-center gap-4 text-sm text-zinc-500 pt-2 border-t border-zinc-100">
+                          <div className="flex items-center gap-1">
+                            <Calendar size={16} />
+                            <span>{formatDate(blog.createdAt)}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center gap-2">
-                      <Link to={`/blog/edit/${blog._id}`}>
-                        <Button variant="secondary" size="sm">
-                          <Edit size={16} />
+                      <div className="flex items-center gap-2">
+                        <Link to={`/blog/edit/${blog._id}`}>
+                          <Button variant="secondary" size="sm">
+                            <Edit size={16} />
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => handleDelete(blog._id)}
+                          isLoading={deletingId === blog._id}
+                        >
+                          <Trash2 size={16} />
                         </Button>
-                      </Link>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleDelete(blog._id)}
-                        isLoading={deletingId === blog._id}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
+                      </div>
                     </div>
                   </div>
                 </article>
